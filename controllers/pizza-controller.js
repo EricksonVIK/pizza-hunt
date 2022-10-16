@@ -11,7 +11,7 @@ const pizzaController = {
         select: "-__v",
       })
       .select("-__v")
-    //   .sort({ _id: -1 })
+      .sort({ _id: -1 })
       .then((dbPizzaData) => res.json(dbPizzaData))
       .catch((err) => {
         console.log(err);
