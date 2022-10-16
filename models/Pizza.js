@@ -5,17 +5,25 @@ const PizzaSchema = new Schema(
   {
     pizzaName: {
       type: String,
+      // requires data to exist
+      required: true,
+      // removes white space before and after input
+      trim: true,
     },
     createdBy: {
       type: String,
+      required: true,
+      trim: true,
     },
     createdAt: {
       type: Date,
       default: Date.now,
-      get:(createdAtVal) => dateFormat(createdAtVal)
+      get: (createdAtVal) => dateFormat(createdAtVal),
     },
     size: {
       type: String,
+      required: true,
+      enum: ["Personal", "Small", "Medium", "Large", "Extra Large"],
       default: "Large",
     },
     toppings: [],
@@ -29,7 +37,7 @@ const PizzaSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
-      getters: true
+      getters: true,
     },
     id: false,
   }
@@ -41,7 +49,11 @@ const Pizza = model("Pizza", PizzaSchema);
 // get total count of comments and replies on retrieval
 PizzaSchema.virtual("commentCount").get(function () {
   // returns total comments and reply for count
-  return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);});
+  return this.comments.reduce(
+    (total, comment) => total + comment.replies.length + 1,
+    0
+  );
+});
 
 // export the Pizza model
 module.exports = Pizza;
