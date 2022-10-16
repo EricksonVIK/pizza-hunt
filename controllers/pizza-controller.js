@@ -5,6 +5,13 @@ const pizzaController = {
   // get all pizzas GET/api/pizzas. Mongoose .find similar to Sequelize .findAll
   getAllPizza(req, res) {
     Pizza.find({})
+      .populate({
+        path: "comments",
+        // -_v tells mongoose we don't want it returned
+        select: "-__v",
+      })
+      .select("-__v")
+    //   .sort({ _id: -1 })
       .then((dbPizzaData) => res.json(dbPizzaData))
       .catch((err) => {
         console.log(err);
@@ -15,6 +22,11 @@ const pizzaController = {
   // get one pizza by id
   getPizzaById({ params }, res) {
     Pizza.findOne({ _id: params.id })
+      .populate({
+        path: "comments",
+        select: "-__v",
+      })
+      .select("-__v")
       .then((dbPizzaData) => {
         // If no pizza is found, send 404
         if (!dbPizzaData) {
