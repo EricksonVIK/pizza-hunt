@@ -15,6 +15,7 @@ const PizzaSchema = new Schema({
     type: String,
     default: "Large",
   },
+  // [] - an array of something
   toppings: [],
 });
 
