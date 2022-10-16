@@ -40,8 +40,8 @@ const Pizza = model("Pizza", PizzaSchema);
 
 // get total count of comments and replies on retrieval
 PizzaSchema.virtual("commentCount").get(function () {
-  return this.comments.length;
-});
+  // returns total comments and reply for count
+  return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);});
 
 // export the Pizza model
 module.exports = Pizza;
